@@ -2,7 +2,7 @@
 
 development_environment_setup_main(){
 	local root
-	root=$HOME
+	root=/home/sakai
 
 	development_environment_setup_plugins
 	development_environment_setup_vim
