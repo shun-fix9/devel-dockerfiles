@@ -21,9 +21,7 @@ COPY /home/sakai /home/sakai
 RUN useradd -s /bin/bash sakai && \
     usermod -aG sudo sakai && \
     echo '%sudo	ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers.d/sudo-nopasswd && \
-    chown sakai.sakai -R /home/sakai && \
-    chmod 700 /home/sakai/.ssh && \
-    chmod 600 /home/sakai/.ssh/*
+    chown sakai.sakai -R /home/sakai
 
 USER sakai
 
