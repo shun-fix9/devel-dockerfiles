@@ -6,8 +6,7 @@ fi
 
 env > /etc/docker-env
 
+chown -R sakai:sakai /home/sakai
 sudo -u sakai /home/sakai/bin/development-environment-setup
-
-cp /etc/ssh/ssh_host_rsa_key.pub /home/sakai/.ssh/
 
 exec "$@"
