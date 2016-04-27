@@ -4,10 +4,19 @@ development_environment_setup_main(){
 	local root
 	root=/home/sakai
 
+	development_environment_setup_dotfiles
+
 	development_environment_setup_plugins
 	development_environment_setup_vim
+}
 
-	development_environment_setup_save_initial_home
+development_environment_setup_dotfiles(){
+	local dir
+	local repo
+
+	dir=$root
+	repo=git://github.com/shun-fix9/dotfiles
+	development_environment_setup_git_sync "."
 }
 
 development_environment_setup_plugins(){
@@ -71,27 +80,31 @@ development_environment_setup_vim(){
 
 development_environment_setup_git_sync(){
 	local name
-	name=$(basename $repo)
+	if [ -n "$1" ]; then
+		name=$1
+	else
+		name=$(basename $repo)
+	fi
 
 	echo "$repo => $dir/$name"
 
 	cd $dir
-	if [ -d $name ]; then
-		cd $name
-		git pull
+	if [ $name = "." ]; then
+		if [ -d .git ]; then
+			git pull
+		else
+			git clone $repo tmp_git_repo
+			mv tmp_git_repo/.git .
+			rm -rf tmp_git_repo
+			git checkout .
+		fi
 	else
-		git clone $repo $name
-	fi
-}
-
-development_environment_setup_save_initial_home(){
-	cd $root
-	if [ ! -d .git ]; then
-		git init
-		git config user.email "devel@docker${root//\//-}"
-		git config user.name "docker${root//\//-}"
-		git add .
-		git commit -m "initial home"
+		if [ -d $name ]; then
+			cd $name
+			git pull
+		else
+			git clone $repo $name
+		fi
 	fi
 }
 

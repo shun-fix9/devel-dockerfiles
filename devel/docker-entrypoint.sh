@@ -6,7 +6,7 @@ fi
 
 env > /etc/docker-env
 
-sudo -u sakai development-environment-setup
+sudo -u sakai /home/sakai/bin/development-environment-setup
 
 cp /etc/ssh/ssh_host_rsa_key.pub /home/sakai/.ssh/
 
