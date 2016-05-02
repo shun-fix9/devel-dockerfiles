@@ -8,6 +8,8 @@ development_environment_setup_main(){
 
 	development_environment_setup_plugins
 	development_environment_setup_vim
+
+	development_environment_download_direnv
 }
 
 development_environment_setup_dotfiles(){
@@ -60,6 +62,7 @@ development_environment_setup_vim(){
 		git://github.com/tpope/vim-cucumber
 		git://github.com/tpope/vim-rails
 		git://github.com/vim-ruby/vim-ruby
+		git://github.com/jpo/vim-railscasts-theme.git
 	)
 	for repo in ${repos[@]}; do
 		development_environment_setup_git_sync
@@ -106,6 +109,12 @@ development_environment_setup_git_sync(){
 			git clone $repo $name
 		fi
 	fi
+}
+
+development_environment_download_direnv(){
+	mkdir -p $root/plugins/direnv/bin
+	curl -fsSL https://github.com/direnv/direnv/releases/download/v2.8.1/direnv.linux-amd64 > $root/plugins/direnv/bin/direnv
+	chmod a+x $root/plugins/direnv/bin/direnv
 }
 
 development_environment_setup_main
